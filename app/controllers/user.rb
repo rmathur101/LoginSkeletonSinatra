@@ -9,3 +9,8 @@ end
 get '/user/home' do
 	erb :user_home
 end
+
+get '/user/logout' do
+	session.clear
+	redirect to '/'
+end
