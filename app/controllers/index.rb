@@ -1,17 +1,13 @@
-
-
 get '/' do
 	#These are params if there was an error (otherwise nil)
 	@login_error = params[:params_login]
 	@register_error = params[:params_registration]
-
   erb :index
 end
 
 post '/login' do
 	email = params[:email]
 	password = params[:password]
-
 	if User.authenticate(email, password)
 		user = User.find_by_email(email)
 		session[:user_id] = (User.find_by_email(email)).id
@@ -35,17 +31,4 @@ post '/register' do
 		session[:user_id] = @user.id
 		redirect '/user/home'
 	end
-
-end
-
-before '/user/*' do
-	#DOES THIS EVEN DO ANYTHING?
-	if session[:user_id] != (User.find(session[:user_id])).id
-		redirect '/' #return to root because you are not supposed to be here
-	end
-
-end
-
-get '/user/home' do
-	erb :user_home
 end
